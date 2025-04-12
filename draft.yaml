@@ -1,0 +1,62 @@
+models:
+  Category:
+    name: string
+    slug: string unique
+    image: string nullable
+    is_active: boolean default:true
+    relationships:
+      hasMany: Product
+
+  Brand:
+    name: string
+    slug: string unique
+    image: string nullable
+    is_active: boolean default:true
+    relationships:
+      hasMany: Product
+
+  Product:
+    name: string
+    slug: string unique
+    images: json nullable
+    description: longtext nullable
+    price: decimal:10,2
+    is_active: boolean default:true
+    is_feature: boolean default:false
+    in_stock: boolean default:true
+    on_sale: boolean default:false
+    relationships:
+      belongsTo: Category, Brand
+      hasMany: OrderItem
+
+  Order:
+    grand_total: decimal:10,2 nullable
+    payment_method: string nullable
+    payment_status: string nullable
+    status: enum:new,processing,shipped,delivered,canceled default:new
+    currency: string nullable
+    shipping_amount: decimal:10,2 nullable
+    shipping_method: string nullable
+    notes: text nullable
+    relationships:
+      belongsTo: User
+      hasMany: OrderItem, Address
+
+  OrderItem:
+    quantity: integer default:1
+    unit_amount: decimal:10,2 nullable
+    total_amount: decimal:10,2 nul
+    relationships:
+      belongsTo: Order, Product
+
+  Address:
+    first_name: string nullable
+    last_name: string nullable
+    phone: string nullable
+    street_address: text nullable
+    city: string nullable
+    state: string nullable
+    zip_code: string nullable
+    relationships:
+      belongsTo: Order
+
