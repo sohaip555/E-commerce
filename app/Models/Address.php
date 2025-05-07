@@ -22,14 +22,7 @@ class Address extends Model
         'order_id' => 'integer',
     ];
 
-    protected $fillable = [
-        'address',
-        'city',
-        'state',
-        'country',
-        'zip_code',
-        'order_id',
-    ];
+    protected $guarded = [];
 
     public function order(): BelongsTo
     {

@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use Filament\Forms\Components\TextInput;
+use Filament\Models\Contracts\FilamentUser;
+use Filament\Panel;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -22,6 +24,24 @@ class User extends Authenticatable
         return $this->hasMany(Order::class);
     }
 
+    public function initials()
+    {
+        $name = $this->name;
+        $initials = '';
+
+        $names = explode(' ', $name);
+
+        foreach ($names as $word) {
+            $initials .= strtoupper(substr($word, 0, 1));
+
+            // Limit to 2 initials if you prefer
+            if (strlen($initials) >= 2) {
+                break;
+            }
+        }
+
+        return $initials;
+    }
 
     public static function getForm()
     {
@@ -48,5 +68,10 @@ class User extends Authenticatable
                 ->password()
                 ->dehydrated(false),
         ];
+    }
+
+    public function canAccessPanel(Panel $panel): bool
+    {
+        return $this->email == 'admin@gmail.com';
     }
 }

@@ -19,6 +19,8 @@ class ProductResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
+    protected static ?int $navigationSort = 3;
+
     public static function form(Form $form): Form
     {
         return Product::getForm($form);
@@ -35,8 +37,7 @@ class ProductResource extends Resource
                 Tables\Columns\TextColumn::make('price')
                     ->money()
                     ->sortable(),
-                Tables\Columns\IconColumn::make('is_active')
-                    ->boolean(),
+                Tables\Columns\ToggleColumn::make('is_active'),
                 Tables\Columns\IconColumn::make('is_feature')
                     ->boolean(),
                 Tables\Columns\IconColumn::make('in_stock')

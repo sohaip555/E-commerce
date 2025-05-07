@@ -31,6 +31,8 @@ class Brand extends Model
         return $this->hasMany(Product::class);
     }
 
+
+
     public static  function getForm($form): Form
     {
         return $form
@@ -45,11 +47,10 @@ class Brand extends Model
                                 ->required(),
                             TextInput::make('slug')
                                 ->maxLength(255)
-                                ->unique(Category::class, 'slug', ignoreRecord: true)
                                 ->required()
-                                ->dehydrated() // Ensure the value gets saved
-                                ->disabled(),
-                        ]),
+                                ->disabled()
+                            ->dehydrated(), // Ensure the value gets saved
+                    ]),
                         FileUpload::make('image')
                             ->image(),
                         Toggle::make('is_active')

@@ -13,10 +13,13 @@ use Filament\Forms\Components\ToggleButtons;
 use Filament\Forms\Form;
 use Filament\Forms\Get;
 use Filament\Forms\Set;
+use Filament\Tables\Columns\SelectColumn;
+use Filament\Tables\Columns\TextColumn;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Number as Number2;
 
 class Order extends Model
@@ -34,8 +37,8 @@ class Order extends Model
         'id' => 'integer',
         'grand_total' => 'decimal:2',
         'shipping_amount' => 'decimal:2',
-        'created_at' => 'timestamp',
-        'updated_at' => 'timestamp',
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
         'user_id' => 'integer',
     ];
 
@@ -177,6 +180,45 @@ class Order extends Model
             ]);
     }
 
+    protected static function getMyTable($disaable = false)
+    {
+        return [
+            TextColumn::make('user.name')
+                ->numeric()
+                ->searchable()
+                ->sortable(),
+            TextColumn::make('grand_total')
+                ->numeric()
+                ->sortable(),
+            TextColumn::make('payment_method')
+                ->searchable(),
+            TextColumn::make('payment_status')
+                ->searchable(),
+            TextColumn::make('currency')
+                ->searchable(),
+            SelectColumn::make('status')
+                ->label('Status1')
+                ->hidden($disaable)
+                ->options([
+                    'new' => 'New',
+                    'processing' => 'Processing',
+                    'shipped' => 'Shipped',
+                    'delivered' => 'Delivered',
+                    'cancelled' => 'Cancelled',
+                ]),
+            TextColumn::make('shipping_method')
+                ->searchable(),
+            TextColumn::make('created_at')
+                ->dateTime()
+                ->sortable()
+                ->toggleable(isToggledHiddenByDefault: true),
+            TextColumn::make('update_at')
+                ->dateTime()
+                ->sortable()
+                ->toggleable(isToggledHiddenByDefault: true),
+        ];
+    }
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
@@ -187,8 +229,13 @@ class Order extends Model
         return $this->hasMany(OrderItem::class);
     }
 
-    public function Address(): HasMany
+    public function product(): HasOne|Order
     {
-        return $this->hasMany(Address::class);
+        return $this->hasOne(Product::class);
+    }
+
+    public function address(): HasOne
+    {
+        return $this->hasOne(Address::class);
     }
 }

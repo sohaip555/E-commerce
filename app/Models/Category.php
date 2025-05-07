@@ -51,7 +51,6 @@ class Category extends Model
                                         ->required(),
                                     TextInput::make('slug')
                                         ->maxLength(255)
-                                        ->unique(Brand::class, 'slug')
                                         ->disabled()
                                         ->dehydrated()
                                         ->required(),

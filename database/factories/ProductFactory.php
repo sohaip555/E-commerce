@@ -25,7 +25,11 @@ class ProductFactory extends Factory
         return [
             'name' => fake()->name(),
             'slug' => fake()->slug(),
-            'images' => '{}',
+            'images' => json_encode([
+                fake()->imageUrl(),
+                fake()->imageUrl(),
+                fake()->imageUrl(),
+            ]),
             'description' => fake()->text(),
             'price' => fake()->randomFloat(2, 150.99, 99999.99),
             'is_active' => fake()->boolean(),

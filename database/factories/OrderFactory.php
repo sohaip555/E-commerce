@@ -25,7 +25,7 @@ class OrderFactory extends Factory
             'grand_total' => fake()->randomFloat(2, 0, 99999999.99),
             'payment_method' => fake()->word(),
             'payment_status' => fake()->word(),
-            'status' => fake()->randomElement(["new","processing","shipped","delivered","canceled"]),
+            'status' => fake()->randomElement(["new","processing","shipped","delivered","cancelled"]),
             'currency' => fake()->word(),
             'shipping_amount' => fake()->randomFloat(2, 0, 99999999.99),
             'shipping_method' => fake()->word(),

@@ -3,8 +3,8 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\BrandResource\Pages;
-use App\Filament\Resources\BrandResource\RelationManagers;
 use App\Models\Brand;
+use App\Models\Category;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Forms\Set;
@@ -18,7 +18,10 @@ class BrandResource extends Resource
 {
     protected static ?string $model = Brand::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-tag';
+
+    protected static ?int $navigationSort = 2;
+
 
     public static function form(Form $form): Form
     {
@@ -72,7 +75,7 @@ class BrandResource extends Resource
         return [
             'index' => Pages\ListBrands::route('/'),
             'create' => Pages\CreateBrand::route('/create'),
-            'edit' => Pages\EditBrand::route('/{record}/edit'),
+//            'edit' => Pages\EditBrand::route('/{record}/edit'),
         ];
     }
 }

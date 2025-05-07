@@ -15,6 +15,10 @@ class OrderItemFactory extends Factory
      *
      * @var string
      */
+
+    protected $guarded = [];
+
+
     protected $model = OrderItem::class;
 
     /**

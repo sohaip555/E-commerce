@@ -18,6 +18,9 @@ class OrderResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-shopping-bag';
 
+    protected static ?int $navigationSort = 5;
+
+
     public static function form(Form $form): Form
     {
         return Order::getForm($form);
@@ -26,39 +29,7 @@ class OrderResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
-            ->columns([
-                Tables\Columns\TextColumn::make('user.name')
-                    ->numeric()
-                    ->searchable()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('grand_total')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('payment_method')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('payment_status')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('currency')
-                    ->searchable(),
-                Tables\Columns\SelectColumn::make('status')
-                ->options([
-                    'new' => 'New',
-                    'processing' => 'Processing',
-                    'shipped' => 'Shipped',
-                    'delivered' => 'Delivered',
-                    'cancelled' => 'Cancelled',
-                ]),
-                Tables\Columns\TextColumn::make('shipping_method')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('update_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-            ])
+            ->columns(Order::getMyTable())
             ->filters([
                 //
             ])
@@ -92,6 +63,7 @@ class OrderResource extends Resource
     {
         return 'success';
     }
+
 
     public static function getPages(): array
     {

@@ -24,6 +24,8 @@ class  Product extends Model
      *
      * @var array
      */
+
+    protected $guarded = [];
     protected $casts = [
         'id' => 'integer',
         'images' => 'array',
@@ -42,9 +44,6 @@ class  Product extends Model
     {
         return $form
             ->schema([
-
-//                Grid::make()->schema([
-
                     Section::make('Product Info')
                         ->schema(
                             [
@@ -77,33 +76,22 @@ class  Product extends Model
                                    ->required(),
                            ])->columnSpan(1),
 
-                          Section::make('status')
-                              ->schema([
-                                  Toggle::make('is_active')
-                                      ->required(),
-                                  Toggle::make('is_feature')
-                                      ->required(),
-                                  Toggle::make('in_stock')
-                                      ->required(),
-                                  Toggle::make('on_sale')
-                                      ->required(),
-                              ])
+                      Section::make('status')
+                          ->schema([
+                              Toggle::make('is_active')
+                                  ->required(),
+                              Toggle::make('is_feature')
+                                  ->required(),
+                              Toggle::make('in_stock')
+                                  ->required(),
+                              Toggle::make('on_sale')
+                                  ->required(),
+                          ])
                    ])->columnSpan(1),
-
-
                     Section::make('Images')
                         ->schema([
                             FileUpload::make('images') ,
                         ])->columnSpan(2),
-
-
-
-
-
-//                ])->columns(3)
-//                    ->extraAttributes(['class' => 'items-center']),
-//
-//
                 ])->columns(3);
     }
 
